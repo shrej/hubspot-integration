@@ -41,5 +41,9 @@ const leadStatusMap = {
 app.use(bodyParser.json())
 app.post("/recordupdate", (req, res) => {
   console.log(req.body) 
+  const changeBody = req.body[0];
+  console.log(update);
+  const statusUpdate = changeBody.propertyValue;
+  console.log(statusUpdate);
   res.status(200).end() 
 })
