@@ -54,5 +54,6 @@ async function getSalesforceContactIdbyHubspotId(hubspotId) {
         method: 'GET',
         path: `/crm/v3/objects/contact/${hubspotId}?properties=sourceid`,
     })
+    console.log(await response.json());
    return await response.json().properties.sourceid;
 }
