@@ -43,7 +43,7 @@ app.use(bodyParser.json())
 app.post("/recordupdate", async (req, res) => {
   const recordUpdate = req.body[0];
   const statusUpdate = recordUpdate.propertyValue;
-  const salesforceStatusUpdate = getKeyByValue(statusUpdate);
+  const salesforceStatusUpdate = getKeyByValue(leadStatusMap,statusUpdate);
   const recordId = await getSalesforceContactIdbyHubspotId(recordUpdate.objectId);
   console.log({salesforceStatusUpdate, recordId});
   res.status(200).end() 
