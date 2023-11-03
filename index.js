@@ -72,7 +72,7 @@ function publishPlatformEvent(eventData) {
     const _request = {
         url: '/services/data/v59.0/sobjects/partnerdemo__FieldUpdate__e/',
         method: 'post',
-        body: eventData,
+        body: JSON.stringify(eventData),
         headers : {
                 "Content-Type" : "application/json"
             }
