@@ -9,6 +9,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3001;
 const server = app.listen(port, () => console.log(`Hubspot Integration app running on PORT:${port}!`));
+const bodyParser = require("body-parser")
 
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
@@ -36,3 +37,9 @@ const leadStatusMap = {
     "Open - Not Contacted": "NEW",
     "Working - Contacted": "IN_PROGRESS",
 };
+
+app.use(bodyParser.json())
+app.post("/recordupdate", (req, res) => {
+  console.log(req.body) 
+  res.status(200).end() 
+})
