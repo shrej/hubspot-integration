@@ -43,8 +43,9 @@ app.use(bodyParser.json())
 app.post("/recordupdate", async (req, res) => {
   const recordUpdate = req.body[0];
   const statusUpdate = recordUpdate.propertyValue;
+  const salesforceStatusUpdate = getKeyByValue(statusUpdate);
   const recordId = await getSalesforceContactIdbyHubspotId(recordUpdate.objectId);
-  console.log({statusUpdate, recordId});
+  console.log({salesforceStatusUpdate, recordId});
   res.status(200).end() 
 })
 
@@ -58,4 +59,8 @@ async function getSalesforceContactIdbyHubspotId(hubspotId) {
    const sourceid = await responseJson.properties.sourceid;
    console.log(sourceid);
    return sourceid;
+}
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
 }
