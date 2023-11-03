@@ -23,8 +23,9 @@ conn.login(username, password, function(err, userInfo) {
     const email = payload.partnerdemo__Email__c;
     const company = payload.partnerdemo__Company__c;
     const hs_lead_status = leadStatusMap[payload.partnerdemo__LeadStatus__c];
+    const city = payload.partnerdemo__SourceRecordId__c;
     const hubspotContact = {
-        properties: {firstname, lastname, email,company, hs_lead_status}
+        properties: {firstname, lastname, email,company, hs_lead_status, city}
     };
     (async()=> {
         const createContactResponse = await hubspotClient.crm.contacts.basicApi.create(hubspotContact);
