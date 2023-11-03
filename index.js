@@ -46,6 +46,10 @@ app.post("/recordupdate", async (req, res) => {
   const salesforceStatusUpdate = getKeyByValue(leadStatusMap,statusUpdate);
   const recordId = await getSalesforceContactIdbyHubspotId(recordUpdate.objectId);
   console.log({salesforceStatusUpdate, recordId});
+  publishPlatformEvent({
+    partnerdemo__RecordId__c: recordId,
+    partnerdemo__FieldValue__c: salesforceStatusUpdate
+  });
   res.status(200).end() 
 })
 
@@ -57,10 +61,27 @@ async function getSalesforceContactIdbyHubspotId(hubspotId) {
     })
    const responseJson = await response.json();
    const sourceid = await responseJson.properties.sourceid;
-   console.log(sourceid);
    return sourceid;
 }
 
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
+}
+
+function publishPlatformEvent(eventData) {
+    const _request = {
+        url: '/services/data/v59.0/sobjects/partnerdemo__FieldUpdate__e/',
+        method: 'post',
+        body: eventData,
+        headers : {
+                "Content-Type" : "application/json"
+            }
+    };
+    console.log(_request);
+
+    conn.login(username, password, function(err, userInfo) { 
+        conn.request(_request, function(err, resp) {
+            console.log(resp);
+        });
+    });
 }
